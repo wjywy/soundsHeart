@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>入口</title>
+</head>
+
+<style>
+  body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+  }
+
+  button {
+    height: 20px;
+    width: 100px;
+    background-color: rgb(153, 153, 153);
+    margin-bottom: 4px;
+    border-radius: 10px;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <button id="login">登录</button>
+  <button id="register">注册</button>
+
+  <script>
+    document.getElementById('login').addEventListener('click',()=> {
+      window.location.href = './enter.html'
+    });
+    document.getElementById('register').addEventListener('click',()=> {
+      window.location.href = './register.html'
+    });
+  </script>
+</body>
+
+</html>

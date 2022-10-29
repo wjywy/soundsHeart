@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>enter</title>
+</head>
+<link rel="stylesheet" href="enter.css">
+<body>
+    <div id="enter">
+        <div class="delete">
+            <div class="triangle"></div>
+            <button @click="backDemo" class="back">退出登录</button>
+        </div>
+        <div class="body">
+            <div class="middle">
+                <p class="lacation">登录平台</p>
+                <form id="myForm1">
+                    <div class="symbolPicture" id="symbolPicture">
+                        <!-- <img src="../assets/bigxiong.jpeg" alt="头像" id="picture"> -->
+                        <input type="file" placeholder="选择头像" id="avatar">
+                    </div>
+                    <div class="enter1">
+                        <label for="enterDemo" style="color: white;">账号:</label>
+                        <input type="text" id="enterDemo">
+                    </div>
+                    <div class="register1">
+                        <label for="registerDemo" style="color: white;">密码:</label>
+                        <input type="password" id="registerDemo">
+                    </div>
+                    <button class="button" type="button" id="submit1">登录</button>
+                </form>
+                <p class="remember" id="remember">记住密码 </p>
+                <p class="forget" id="forget">忘记密码</p>
+            </div>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="enter.js"></script>
+</body>
+
+</html>

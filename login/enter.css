@@ -1,0 +1,108 @@
+body {
+    background-color: rgb(0, 33, 80);
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+    height: 350px;
+    background-color: rgb(0, 40, 81);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 30px;
+}
+
+.delete {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.back {
+    background-color: white;
+    border: 0px;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    border: 10px solid transparent;
+    border-left-color: pink;
+}
+
+.symbolPicture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background-color: rgba(253, 253, 253,0.2);
+    margin-left: 60px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.symbolPicture input {
+    color: rgb(253, 253, 253);
+    width: 0;
+    height: 0;
+    border: 10px solid rgb(253, 253, 253);
+    position: absolute;
+    z-index: 2;
+}
+
+.picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+
+.lacation {
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    color: white;
+}
+
+.enter1 {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.register1 {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+input {
+    background-color: rgb(255, 255, 255);
+}
+
+.button {
+    width: 170px;
+    background-color: rgb(274, 36, 112);
+    margin-left: 35px;
+    margin-bottom: 5px;
+}
+
+.remember {
+    font-weight: 100;
+    color: skyblue;
+}
+
+.gone {
+    display: none;
+}

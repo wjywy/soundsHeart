@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>connection</title>
+</head>
+<link rel="stylesheet" href="connection.css">
+
+<body>
+    <!-- <div class="delete">
+        <div class="triangle"></div>
+        <button onclick="backDemo()" class="back">退出登录</button>
+    </div> -->
+    <div id="connection">
+        <div class="left-right">
+            <div class="left">
+                <div class="Dimension" id="Dimension">
+                    <img  src="" alt="头像" class="twoDimension" id="headPicture">
+                    <div >
+                        <div class="dimensionWord1" id="dimensionWord1"></div>
+                        <!-- <div class="dimensionWord2"></div> -->
+                    </div>
+                </div>
+                <div class="Dimension">
+                    <img src="../assets/bigxiong.jpeg" alt="头像" class="twoDimension" >
+                    <div >
+                        <div class="dimensionWord1">云边有个小卖部</div>
+                        <div class="dimensionWord2">上一条信息</div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <span style="margin-left: 450px;">点击头像并发送消息</span>
+                <div class="receiveMessage" id="receiveMessage">
+                    <!-- <div class="Dimension" >
+                        <img src="../assets/csy.jpg" alt="头像" class="twoDimension">
+                        <div class="rightDimension"></div>
+                    </div> -->
+                </div>
+                <div class="pictureBox" id="pictureBox">
+                    <img src="../assets/small nanGua.jpg" alt="南瓜" class="picture">
+                    <img src="../assets/confident.jpg" alt="自信" class="picture">
+                    <img src="../assets/eatJing.jpg" alt="吃惊" class="picture">
+                    <img src="../assets/small beaster.jpg" alt="怪兽" class="picture">
+                    <img src="../assets/maSaiKe.jpg" alt="马赛克" class="picture">
+                    <img src="../assets/smallTongMian.jpg" alt="小桶面" class="picture">
+                    <img src="../assets/anger.png" alt="生气" class="picture">
+                </div>
+                <div class="bigbox">
+                    <div contenteditable="true" class="sendMessage" id="input"></div>
+                    <div class="sendPicture-button">
+                        <div class="sendPicture">
+                            <img src="../assets/cute.jpg" alt="发送表情" class="picture">
+                        </div>
+                        <button class="open-close" onclick="sendMessage()" id="openClose"
+                        >发送</button>
+                        <button class="open-close" onclick="closeWindow()">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="connection.js"></script>
+</body>
+
+</html>
