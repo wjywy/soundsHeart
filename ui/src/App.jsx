@@ -1,15 +1,11 @@
-import React, {  useEffect } from 'react';
-import './app.css';
+import React from 'react';
+import Router from './router/router'
 const App = () => {
-  useEffect(() => {
-   console.log(`vite-react-cil`);
-  }, []);
-
   return (
- <div>
-   <h2>Welcome to vite-react-cil</h2>
- </div>
+    <div className="App">
+      <Router />
+    </div>
   );
-};
+}
 
 export default App;
