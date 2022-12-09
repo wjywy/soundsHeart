@@ -1,29 +1,25 @@
 var express = require('express');
 var router = express.Router();
 let fs = require('fs')
+
+// 读取心音文件
 function readMyFile (fileName) {
-    fs.readFile(fileName,function(err,data) {
-        if(err) {
-            console.log('文件读取出错')
-        } else {
-            console.log(data.toString())
-            return 2
-        }
+    return new Promise((resolve, reject) => {
+        fs.readFile(fileName,async function(err,data) {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(data.toString())
+            }
+        })    
     })
 }
 
-/* GET show listing. */
-router.get('/', function(req, res, next) {
-    // fs.readFile('D:/心音软件ddd/UserData/Data/心音.txt',function(err,data) {
-    //     if(err) {
-    //         console.log('读取文件出错')
-    //     } else {
-    //         let fileData = data
-    //         return fileData
-    //     }
-    // })
-res.send(readMyFile('D:/心音软件ddd/UserData/Data/心音.txt'));
-// res.send('显示心音信号')
+router.get('/', async function(req, res, next) {
+    let data = await readMyFile('D:/心音软件ddd/UserData/Data/心音.txt')
+    
+    console.log(data);
+    res.send(data);
 });
 
 module.exports = router;
