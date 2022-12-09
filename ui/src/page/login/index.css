@@ -1,7 +1,6 @@
 body {
   padding: 0;
   margin: 0;
-  background-image: url('../../assets/soundPicture.jpg');
 }
 .login_tocenter {
   position: absolute;
@@ -19,9 +18,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-.login_text_password label {
-  color: white;
-}
 .login_forget_find {
   display: flex;
   flex-direction: row;
@@ -29,7 +25,6 @@ body {
 }
 .login_forget_find .login_forgrtPassword,
 .login_forget_find .login_findPassword {
-  color: white;
   margin-right: 1vw;
 }
 .login_forget_find .login_forgrtPassword:hover,

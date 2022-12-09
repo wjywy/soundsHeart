@@ -1,0 +1,21 @@
+.home_picture {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.home_heart_picture {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  height: 100px;
+  width: 100px;
+  background-color: aqua;
+  color: white;
+}
