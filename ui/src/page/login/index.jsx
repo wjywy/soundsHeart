@@ -3,14 +3,15 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { Input, Button, Card } from 'antd'
 import './index.less'
 
 const App = () => {
     let [password, setPassword] = useState(null);
     let [code, setCode] = useState(null);
     let [examcode, setExamcode] = useState(false);
-    let [exampass,setExampass] = useState(false);
-    let [examExam,setExamExam] = useState(false);
+    let [exampass, setExampass] = useState(false);
+    let [examExam, setExamExam] = useState(false);
 
     let navigate = useNavigate()
 
@@ -45,8 +46,8 @@ const App = () => {
         }
     }
     function checkTrue() {
-        if (exampass && examcode  && examExam ) {
-           navigate('/home',{replace:false})
+        if (exampass && examcode && examExam) {
+            navigate('/home', { replace: false })
         }
     }
     useEffect(() => {
@@ -63,21 +64,21 @@ const App = () => {
         <>
             <div className='login_tocenter'>
                 <div className='login_text_password'>
-                    <label htmlFor="code">账号</label>
-                    <input type="text" id='code' placeholder='请输入手机号或者邮箱'
+                    <Input type="text" placeholder='请输入手机号或者邮箱' bordered={false}
                         onChange={handleCode} />
-                    <label htmlFor="password" >密码</label>
-                    <input type="password" id='password' placeholder='请输入密码'
+                    <div className='login_divide'></div>
+                    <Input type="password" placeholder='请输入密码' bordered={false}
                         onChange={inputPassword} />
-                    <label htmlFor="exam" >检验</label>
-                    <input type="password" id='exam' placeholder='请验证密码'
+                    <div className='login_divide'></div>
+                    <Input type="password" placeholder='请重复密码' bordered={false}
                         onChange={examPassword} />
+                    <div className='login_divide'></div>
                 </div>
                 <div className='login_forget_find'>
                     <div className='login_forgrtPassword'>忘记密码</div>
                     <div className='login_findPassword'>找回密码</div>
                 </div>
-                <button className='login_button' onClick={checkTrue}>点击登录</button>
+                <Button onClick={checkTrue} type={'primary'} style={{ marginTop: 20, width: '55%', borderRadius: 5 }}>点击登录</Button>
             </div>
         </>
     )
