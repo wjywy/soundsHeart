@@ -7,37 +7,45 @@ import { Input, Button, Card } from 'antd'
 import './index.less'
 
 const App = () => {
-    let [password, setPassword] = useState(null);
-    let [code, setCode] = useState(null);
-    let [examcode, setExamcode] = useState(false);
-    let [exampass, setExampass] = useState(false);
-    let [examExam, setExamExam] = useState(false);
+    let [password, setPassword] = useState<null | number> (null);
+    let [code, setCode] = useState<null | number>(null);
+    let [examcode, setExamcode] = useState<boolean>(false);
+    let [exampass, setExampass] = useState<boolean>(false);
+    let [examExam, setExamExam] = useState<boolean>(false);
 
     let navigate = useNavigate()
 
-    function handleCode(e) {
+    type eType = {
+        target:{
+            value:string
+        }
+    }
+
+    function handleCode(e: eType) {
         console.log(e.target.value.length)
-        console.log(e.target.value)
+        console.log(typeof(e.target.value))
         if ((e.target.value.length < 6 || e.target.value.length > 12) && e.target.value !== '') {
             console.log('长度出错')
             setExamcode(false)
         } else {
-            setCode(e.target.value)
+            setCode(Number(e.target.value))
             setExamcode(true)
         }
     }
-    function inputPassword(e) {
+
+    function inputPassword(e: eType) {
         if ((e.target.value.length < 6 || e.target.value.length > 12) && e.target.value !== null) {
             console.log('长度出错')
             setExampass(false)
         } else {
-            setPassword(e.target.value)
+            setPassword(Number(e.target.value))
             setExampass(true)
         }
 
     }
-    function examPassword(e) {
-        if (e.target.value != password) {
+
+    function examPassword(e: eType) {
+        if (Number(e.target.value ) != password) {
             console.log("两次输入密码不一致");
             setExamExam(false)
         } else {
@@ -45,11 +53,13 @@ const App = () => {
             setExamExam(true)
         }
     }
+
     function checkTrue() {
         if (exampass && examcode && examExam) {
             navigate('/home', { replace: false })
         }
     }
+
     useEffect(() => {
         axios.get('http://localhost:3000/login')
             .then((res) => {
@@ -60,6 +70,7 @@ const App = () => {
                 console.log(error);
             })
     }, [])
+    
     return (
         <>
             <div className='login_tocenter'>
