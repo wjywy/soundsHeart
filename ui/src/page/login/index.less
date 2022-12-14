@@ -23,6 +23,9 @@ body {
     .login_text_password {
         display: flex;
         flex-direction: column;
+        .login_placeholder::-webkit-input-placeholder {
+            font-size: 10px;
+        }
         .login_divide {
             font-size: 8px;
             height: 1px;
@@ -30,6 +33,12 @@ body {
             background-color: rgb(240,241,244);
             margin-bottom: 10px;
         }
+        .login_sendExamWord {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            font-size: 8px;
+        } 
     }
 
     .login_forget_find {
