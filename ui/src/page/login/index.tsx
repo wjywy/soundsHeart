@@ -1,7 +1,6 @@
 import React, {
     useState,
-    useEffect,
-    useRef
+    useEffect
 } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -9,26 +8,23 @@ import { Input, Button, Card } from 'antd'
 import { useTime } from '../../hook/useTime'
 import './index.less'
 
+let time: any
 const App = () => {
-    let [password, setPassword] = useState<null | number>(null);
-    let [code, setCode] = useState<null | number>(null);
-    let [examcode, setExamcode] = useState<boolean>(false);
-    let [exampass, setExampass] = useState<boolean>(false);
-    let [examExam, setExamExam] = useState<boolean>(false);
-    let [examWo,setExamWo] = useState<boolean>(false)
-
-    let controlTime = useRef()
-    // let [count,setCount] = useState<number[]>(useTime(60))  //倒计时hook
-    let [count] = useTime(60)
-
-    let navigate = useNavigate()
-
-
     type eType = {
         target: {
             value: string
         }
     }
+
+    let [password, setPassword] = useState<null | number>(null);
+    let [code, setCode] = useState<null | number>(null);
+    let [examcode, setExamcode] = useState<boolean>(false);
+    let [exampass, setExampass] = useState<boolean>(false);
+    let [examExam, setExamExam] = useState<boolean>(false);
+    let [count, setCount] = useState<number>(60)
+    // let [number,setNumber] = useState<number>(5)
+
+    let navigate = useNavigate()
 
     // 输入手机号
     function handleCode(e: eType) {
@@ -44,7 +40,15 @@ const App = () => {
     }
 
     function sendExamWord() {
-        setExamWo(true)
+        time = setInterval(() => {
+            setCount((pre) => pre - 1)
+        }, 1000)
+        if (count > 0 && count < 61) {
+            console.log(111)
+        } else {
+            clearInterval(time)
+            setCount(60)
+        }
     }
 
     // 验证码
@@ -103,7 +107,7 @@ const App = () => {
                     <div className='login_sendExamWord'>
                         <Input type="password" placeholder='请输入验证码' bordered={false}
                             onChange={examWord} className='login_placeholder' />
-                        <div onClick={sendExamWord} > { count } </div>
+                        <Button onClick={sendExamWord} disabled={count > 0 && count < 60 ? true : false}> {count > 0 && count < 60 ? count : '发送验证码'} </Button>
                     </div>
                     <div className='login_divide'></div>
                     <Input type="password" placeholder='请输入密码' bordered={false}
@@ -118,7 +122,6 @@ const App = () => {
                     <div className='login_findPassword'>找回密码</div>
                 </div>
                 <Button onClick={checkTrue} type={'primary'} style={{ marginTop: 20, width: '55%', borderRadius: 5 }}>点击登录</Button>
-                <div>{count > 0 ? count : '发送验证码'}</div>
             </div>
         </>
     )
