@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MenHome from '../../components/menu/index'
 import axios from "axios";
 import { Outlet } from "react-router-dom";
 import './index.css'
@@ -20,10 +21,11 @@ const App = () => {
     }
     return (
         <>
-            <div>欢迎来到心音首页</div>
-            <div >
-                <button className="home_heart_picture" onClick={to_sound}>心音图鉴</button>
-            </div >
+            {/* <div>欢迎来到心音首页</div> */}
+            < MenHome />
+            {/* <div > */}
+                {/* <button className="home_heart_picture" onClick={to_sound}>心音图鉴</button> */}
+            {/* </div > */}
             <div >
                 <Outlet />
             </div>

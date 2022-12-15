@@ -1,4 +1,5 @@
 import React from "react";
+import MenHome from '../../../components/menu/index'
 import './index.css'
 
 const App = () => {

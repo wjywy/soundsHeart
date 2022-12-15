@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+// bin下面的www是启动文件【入口】
+// app.js ==> 全局配置文件
+// router ==>  路由的配置
+// views  ==>  页面
+// public ==>  静态资源
+
 /**
  * Module dependencies.
  */

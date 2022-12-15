@@ -1,9 +1,17 @@
+// 1.mysql查询语句：
+  //  select * from 表名称：查询所有
+  // select * from 表名称 where userName=? and userPwd=?   部分查询
+// 2.musql增加语句：
+  // insert into 表名称 value
+
+
 var createError = require('http-errors');
 var express = require('express');
 let cors = require('cors')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
