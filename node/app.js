@@ -15,7 +15,9 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var HomeRouter = require('./routes/login');
+var HomeRouter = require('./routes/home');
+let EnterRouter = require('./routes/login/login') // 登录
+let RegisterRouter = require('./routes/login/register') // 注册
 
 var app = express();
 
@@ -33,7 +35,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 配置接口
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/home',HomeRouter)
+app.use('/home',HomeRouter);
+app.use('/enter',EnterRouter);
+app.use('/register',RegisterRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -52,7 +56,7 @@ app.use(function(err, req, res, next) {
 });
 
 // 端口
-app.listen(3000,() => {
+app.listen(4000,() => {
   console.log('server running')
 })
 

@@ -7,7 +7,7 @@ let db = require('../sql.js')   //导入数据库文件
 let multiparty = require('multiparty')  //上传图片
 var router = express.Router();
 let fs = require('fs');
-const { post } = require('./login');
+const { post } = require('./home');
 
 // 读取心音文件
 function readMyFile (fileName) {
@@ -27,7 +27,4 @@ router.get('/', async function(req, res, next) {
     console.log(data);
     res.send(data);
 });
-
-
-
 module.exports = router;

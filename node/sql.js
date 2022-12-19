@@ -9,16 +9,23 @@ const connection = mysql.createConnection({
 })
 // 库-表-字段
 connection.connect()
+
+// 注册接口——负责新增数据
+
+
+
 // 插入
 connection.query('insert into user value (?,?)',[3,'wangyi'],(err,res,fields) => {
   if(err) throw err
   console.log(res)
 })
+
 // 查询
-connection.query('select * from user where id=? and useName=?',[1,'wujiayu'],(err,res,fields) => {   //查询部分数据
+ connection.query('select * from user where id=? and useName=?',[1,'wujiayu'],(err,res,fields) => {   //查询部分数据
   if(err) throw err
   console.log(res)
 })
+
 connection.end()
 
 module.exports = connection
