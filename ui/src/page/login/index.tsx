@@ -94,33 +94,15 @@ const App = () => {
   const Login = async () => {
     if (password && code) {
       const data = await login({
-        username: code,
-        password: password,
+        'username': code,
+        'password': password,
+      }).then((res) => {
+        console.log("res", res);
       });
-      console.log(data)
     }
   };
   useEffect(() => {
-    submit &&
-      Login()
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-    // axios.get('http://localhost:3000/enter?' + 'code=' + code + '&password=' + password)
-    //     .then((res) => {
-    //         console.log('333333')
-    //         console.log(res)
-    //         if (res.status === 200) {
-    //             navigate('/home')
-    //         }
-    //     })
-    //     .catch((err) => {
-    //         console.log(err)
-    //     })
+    submit && Login();
   }, [submit]);
 
   return (

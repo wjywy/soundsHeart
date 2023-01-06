@@ -1,22 +1,25 @@
 // 实现登录 注册  忘记密码 找回密码的接口功能
 //   登录 ：/login
 
-var express = require('express');
+let express = require('express');
 const mysql = require('mysql')
-var router = express.Router();
+const db = require('../../dao/db');
+let router = express.Router();
+let conn
 
-let conn = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"630wujiayuwy",
-    database:"sound"
-})
+// let conn = mysql.createConnection({
+//     host:"localhost",
+//     user:"root",
+//     password:"630wujiayuwy",
+//     database:"sound"
+// })
 
 // 点击登录，需要到数据库中进行查找
 router.get('/',function (req,res,next) {
+    conn = db.createConnection()
+    conn.connect()
     let usename = req.query.username
     let password = req.query.password
-    conn.connect()
     let sql = 'select * from user value (?,?)' //查询语句
     let sqlparams = [usename,password]
     conn.query(sql,sqlparams,(err,result) => {
@@ -35,8 +38,8 @@ router.get('/',function (req,res,next) {
                 data:result 
             })
         }
-        conn.end()
     })
+    conn.end()
 })
 
 module.exports = router

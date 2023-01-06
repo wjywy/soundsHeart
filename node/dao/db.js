@@ -14,17 +14,21 @@
 
 const mysql = require("mysql")
 
-const connection = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"630wujiayuwy",
-    database:"sound"
-})
-// 库-表-字段
-connection.connect()
-// 查询
-connection.query('select * from user',(err,res) => {
-    if(err) throw err
-    console.log(res)
-})
-connection.end()
+function createConnection() {
+    let connection = mysql.createConnection({
+        host:"localhost",
+        user:"root",
+        password:"630wujiayuwy",
+        database:"sound"
+    })
+    return connection
+}
+module.exports.createConnection = createConnection
+// // 库-表-字段
+// connection.connect()
+// // 查询
+// connection.query('select * from user',(err,res) => {
+//     if(err) throw err
+//     console.log(res)
+// })
+// connection.end()
