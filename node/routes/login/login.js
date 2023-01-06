@@ -14,20 +14,22 @@ let conn = mysql.createConnection({
 
 // 点击登录，需要到数据库中进行查找
 router.get('/',function (req,res,next) {
-    let code = req.query.code
+    let usename = req.query.username
     let password = req.query.password
     conn.connect()
     let sql = 'select * from user value (?,?)' //查询语句
-    let sqlparams = [code,password]
+    let sqlparams = [usename,password]
     conn.query(sql,sqlparams,(err,result) => {
         if (err) {
             res.json({
+                data:[usename,password],
                 code:500,
                 msg:'sql执行错误',
                 err
             })
         } else {
             res.json({
+                data:[usename,password],
                 code:200,
                 msg:'查询成功',
                 data:result 

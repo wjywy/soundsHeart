@@ -8,7 +8,6 @@ import React, {
 export const useTime = (calnumber: number) => {
     let [count, setCount] = useState<number>(calnumber)
     let timerRef = useRef<NodeJS.Timer>()
-    const func = 
     useEffect(() => {
         console.log(count)
         timerRef.current = setInterval(() => {
@@ -23,6 +22,6 @@ export const useTime = (calnumber: number) => {
             clearInterval(timerRef.current)
         }
     },[count])
-    return {count,func}
+    return {count}
 };
 // export default useTime;

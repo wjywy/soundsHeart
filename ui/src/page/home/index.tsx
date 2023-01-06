@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import MenHome from '../../components/menu/index'
 import axios from "axios";
 import { Outlet } from "react-router-dom";
-import './index.css'
+import './index.less'
 
 const App = () => {
     let navigate = useNavigate()
     useEffect(() => {
-        axios.get('http://localhost:3000/home')
+        axios.get('http://localhost:3000/enter')
             .then((res) => {
                 console.log(res);
             })

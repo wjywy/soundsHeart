@@ -1,6 +1,6 @@
 import React from "react";
 import MenHome from '../../../components/menu/index'
-import './index.css'
+import './index.less'
 
 const App = () => {
     return (
