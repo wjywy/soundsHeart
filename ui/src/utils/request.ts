@@ -152,7 +152,7 @@ class Request {
     get<T>(url: string,params?: object): Promise<T> {
         return this.instance.get(url, params )
     }
-    post<T>(url: string, params?: object): Promise<T> {
+    post<T>(url: string, params?: object,headers: string = ''): Promise<T> {
         return this.instance.post(url, params)
     }
     put<T>(url: string, params?: object): Promise<T> {

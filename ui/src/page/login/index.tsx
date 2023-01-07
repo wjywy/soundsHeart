@@ -3,8 +3,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Input, Button, Card } from "antd";
 import { useTime } from "../../hook/useTime";
-import "./index.less";
+import { message } from "antd";
 import { login } from "../../api/login/login";
+import "./index.less";
 
 let time: any;
 const App = () => {
@@ -14,16 +15,30 @@ const App = () => {
     };
   };
 
-  let [password, setPassword] = useState<number>(); //密码
-  let [code, setCode] = useState<number>(); //账号
-  let [examcode, setExamcode] = useState<boolean>(false);
-  let [exampass, setExampass] = useState<boolean>(false);
-  let [examExam, setExamExam] = useState<boolean>(false);
+  let [password, setPassword] = useState<string>(); //密码
+  let [examPassPass, setExamPassPass] = useState<boolean>(true);
+  let [code, setCode] = useState<string>(); //账号
+  let [examcode, setExamcode] = useState<boolean>(true);
+  let [examPass, setExamPass] = useState<string>(); //验证密码
+  let [examExam, setExamExam] = useState<boolean>(true);
   let [count, setCount] = useState<number>(60);
   let [submit, setSubmit] = useState<boolean>(false); //发起axios的依赖
-  // let [number,setNumber] = useState<number>(5)
 
   let navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+  const sussess = () => {
+    messageApi.open({
+      type: "success",
+      content: "登录成功",
+    });
+  };
+
+  const error = (msg: string) => {
+    messageApi.open({
+      type: "error",
+      content: msg,
+    });
+  };
 
   // 输入手机号
   function handleCode(e: eType) {
@@ -34,10 +49,10 @@ const App = () => {
       e.target.value !== ""
     ) {
       console.log("长度出错");
-      // setExamcode(false)
+      setExamcode(false);
     } else {
-      setCode(Number(e.target.value));
-      // setExamcode(true)
+      setCode(e.target.value);
+      setExamcode(true);
     }
   }
 
@@ -62,22 +77,22 @@ const App = () => {
   function inputPassword(e: eType) {
     if (
       (e.target.value.length < 6 || e.target.value.length > 12) &&
-      e.target.value !== null
+      e.target.value !== ""
     ) {
-      console.log("长度出错");
-      // setExampass(false)
+      setExamPassPass(false);
     } else {
-      setPassword(Number(e.target.value));
+      setPassword(e.target.value);
+      setExamPassPass(true);
     }
   }
 
   // 重复密码
   function examPassword(e: eType) {
-    if (Number(e.target.value) != password) {
-      console.log("两次输入密码不一致");
+    if (e.target.value != password) {
+      setExamPass(e.target.value);
       setExamExam(false);
     } else {
-      console.log(e.target.value);
+      setExamPass(e.target.value);
       setExamExam(true);
     }
   }
@@ -88,16 +103,27 @@ const App = () => {
   }
 
   function submit_thing() {
-    setSubmit(true);
+    if (password && code && examPass) {
+      setSubmit(true);
+    }
   }
 
   const Login = async () => {
-    if (password && code) {
+    if (password && code && examPass) {
       const data = await login({
-        'username': code,
-        'password': password,
-      }).then((res) => {
+        username: code,
+        password: password,
+        examPassword: examPass,
+      }).then((res: any) => {
         console.log("res", res);
+        if (res.code === 200 && res.msg === "欢迎登录") {
+          setSubmit(true);
+          sussess();
+          navigate("/home");
+        } else {
+          error(res.msg);
+          setSubmit(false);
+        }
       });
     }
   };
@@ -107,16 +133,21 @@ const App = () => {
 
   return (
     <>
+      {contextHolder}
       <div className="login_tocenter">
-        {/* <form> */}
         <div className="login_text_password">
-          <Input
-            type="text"
-            placeholder="请输入手机号或者邮箱"
-            bordered={false}
-            onChange={handleCode}
-            className="login_placeholder"
-          />
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Input
+              type="text"
+              placeholder="请输入手机号或者邮箱"
+              bordered={false}
+              onChange={handleCode}
+              className="login_placeholder"
+            />
+            <span style={{ color: "green", fontSize: "12px" }}>
+              {!examcode && "长度出错"}
+            </span>
+          </div>
           <div className="login_divide"></div>
           <div className="login_sendExamWord">
             <Input
@@ -135,21 +166,29 @@ const App = () => {
             </Button>
           </div>
           <div className="login_divide"></div>
-          <Input
-            type="password"
-            placeholder="请输入密码"
-            bordered={false}
-            onChange={inputPassword}
-            className="login_placeholder"
-          />
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <Input
+              type="password"
+              placeholder="请输入密码"
+              bordered={false}
+              onChange={inputPassword}
+              className="login_placeholder"
+            />
+            <span style={{color: 'green', fontSize: '12px'}}>{!examPassPass && "长度出错"}</span>
+          </div>
           <div className="login_divide"></div>
-          <Input
-            type="password"
-            placeholder="请重复密码"
-            bordered={false}
-            onChange={examPassword}
-            className="login_placeholder"
-          />
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Input
+              type="password"
+              placeholder="请重复密码"
+              bordered={false}
+              onChange={examPassword}
+              className="login_placeholder"
+            />
+            <span style={{ color: "green", fontSize: "12px" }}>
+              {!examExam && "两次输入密码不一致"}{" "}
+            </span>
+          </div>
           <div className="login_divide"></div>
         </div>
         <div className="login_forget_find">
@@ -164,7 +203,6 @@ const App = () => {
         <div className="login_register" onClick={to_register}>
           没有账号，点击注册
         </div>
-        {/* </form> */}
       </div>
     </>
   );

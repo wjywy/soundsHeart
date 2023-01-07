@@ -7,38 +7,38 @@ const db = require('../../dao/db');
 let router = express.Router();
 let conn
 
-// let conn = mysql.createConnection({
-//     host:"localhost",
-//     user:"root",
-//     password:"630wujiayuwy",
-//     database:"sound"
-// })
-
 // 点击登录，需要到数据库中进行查找
 router.get('/',function (req,res,next) {
     conn = db.createConnection()
     conn.connect()
-    let usename = req.query.username
+    let username = req.query.username
     let password = req.query.password
-    let sql = 'select * from user value (?,?)' //查询语句
-    let sqlparams = [usename,password]
-    conn.query(sql,sqlparams,(err,result) => {
-        if (err) {
-            res.json({
-                data:[usename,password],
-                code:500,
-                msg:'sql执行错误',
-                err
-            })
-        } else {
-            res.json({
-                data:[usename,password],
-                code:200,
-                msg:'查询成功',
-                data:result 
-            })
-        }
-    })
+    let examPassword = req.query.examPassword
+    if (password !== examPassword) {
+        res.json({
+            msg:'两次输入密码不一致'
+        })
+    } else {
+        let sql = 'select * from register where username=? and password=?' //查询语句
+        let sqlparams = [username,password]
+        conn.query(sql,sqlparams,(err,result) => {
+            if (err) {
+                console.log('error',err)
+                res.json({
+                    msg:'数据库执行错误',
+                })
+            } else if (result.length === 0 ){
+                res.json({
+                    msg:'账号尚未注册，请注册后使用',
+                })
+            } else {
+                res.json({
+                    code:200,
+                    msg:'欢迎登录'
+                })
+            }
+        })
+    }
     conn.end()
 })
 
