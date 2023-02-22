@@ -1,50 +1,50 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Input, Button, Card } from "antd";
-import { useTime } from "../../../hook/useTime";
-import { register } from "../../../api/login/register";
-import "../index.less";
+import { Input, Button, message } from "antd";
+import "../index.css";
 
-interface User {
-  name: string;
-}
-let time: any;
+let time
 const App = () => {
-  type eType = {
-    target: {
-      value: string;
-    };
+  let [password, setPassword] = useState<string>(''); //密码
+  let [code, setCode] = useState<string>(''); //账号
+  let [examcode, setExamcode] = useState(false);
+  let [exampass, setExampass] = useState(''); //验证码
+  let [examExam, setExamExam] = useState(''); // 重复密码
+  let [count, setCount] = useState(60);
+  // let [submit, setSubmit] = useState(false); //发起axios的依赖
+
+  const [messageApi, contextHolder] = message.useMessage();
+  const sussess = () => {
+    messageApi.open({
+      type: "success",
+      content: "注册成功",
+    });
   };
-
-  let [password, setPassword] = useState<number>(); //密码
-  let [code, setCode] = useState<number>(); //账号
-  let [examcode, setExamcode] = useState<boolean>(false);
-  let [exampass, setExampass] = useState<boolean>(false);
-  let [examExam, setExamExam] = useState<boolean>(false);
-  let [count, setCount] = useState<number>(60);
-  let [submit, setSubmit] = useState<boolean>(false); //发起axios的依赖
-  // let [number,setNumber] = useState<number>(5)
-
+  const error = (msg: string) => {
+    messageApi.open({
+      type: "error",
+      content: msg,
+    });
+  };
   let navigate = useNavigate();
 
   // 输入手机号
-  function handleCode(e: eType) {
+  function handleCode(e:any) {
     console.log(e.target.value.length);
     console.log(typeof e.target.value);
     if (
-      (e.target.value.length < 6 || e.target.value.length > 12) &&
+      (e.target.value.length < 6 || e.target.value.length > 20) &&
       e.target.value !== ""
     ) {
       console.log("长度出错");
-      // setExamcode(false)
     } else {
-      setCode(Number(e.target.value));
-      // setExamcode(true)
+      setCode(e.target.value);
     }
   }
 
-  function sendExamWord() {
+  // 发送验证码
+  async function sendExamWord() {
     time = setInterval(() => {
       setCount((pre) => pre - 1);
     }, 1000);
@@ -54,89 +54,88 @@ const App = () => {
       clearInterval(time);
       setCount(60);
     }
+    let fromData = new FormData()
+    // fromData.append('examPwd', exampass)
+    fromData.append('email', code) // 用户qq邮箱账号
+    const res = await axios.post('http://localhost:3000/email', fromData, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+    console.log(res)
   }
 
   // 验证码
-  function examWord(e: eType) {
+  function examWord(e: any) {
     console.log(e.target.value.length);
+    setExampass(e.target.value)
   }
 
   // 输入密码
-  function inputPassword(e: eType) {
+  function inputPassword(e :any) {
     if (
-      (e.target.value.length < 6 || e.target.value.length > 12) &&
+      (e.target.value.length < 6 || e.target.value.length > 20) &&
       e.target.value !== null
     ) {
       console.log("长度出错");
-      // setExampass(false)
     } else {
-      setPassword(Number(e.target.value));
+      setPassword(e.target.value);
     }
   }
 
   // 重复密码
-  function examPassword(e: eType) {
-    if (Number(e.target.value) != password) {
+  function examPassword(e :any) {
+    if (e.target.value !== password) {
       console.log("两次输入密码不一致");
-      setExamExam(false);
+      setExamExam(e.target.value)
     } else {
       console.log(e.target.value);
-      setExamExam(true);
+      // setExamExam(true);
     }
   }
 
-  // 点击跳转到注册界面
-  function to_register() {
-    // navigate('/register')
-  }
-
-  function submit_thing() {
-    setSubmit(true);
-  }
-
-  let formData = new FormData();
-  formData.append("code", String(code));
-  formData.append("password", String(password));
-  const Register = async () => {
+  // 点击注册
+  async function submit_thing() {
+    let formData = new FormData();
+    formData.append("username", String(code));
+    formData.append("password", String(password));
+    formData.append('examPwd', String(exampass)); // 用户填写的验证码
+    formData.append('doublePwd', String(examExam)); // 用户重复密码
     if (password && code) {
-      const data = await register({
-        'username': code,
-        'password': password,
-      }).then((res) => {
-        console.log(res)
-      }).catch((error) => {
-        console.log(error)
+      const res = await axios.post('http://localhost:3000/register', formData, {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
+      console.log(res.data)
+      if (res.data.code === 200) {
+        sussess()
+      } else {
+        error(res.data.msg)
+      }
     }
-  };
+  }
 
-  useEffect(() => {
-    console.log(12121212212);
-    if (submit) {
-        Register()
-    }
-  }, [submit]);
+  const to_login = () => {
+    navigate('/login', { replace: false })
+  }
 
   return (
     <>
-      <div className="login_tocenter">
-        {/* <form> */}
-        <div className="login_text_password">
+      {contextHolder}
+      <div className='login_tocenter'>
+        <div className='login_text_password'>
           <Input
-            type="text"
-            placeholder="请输入手机号或者邮箱"
+            type='text'
+            placeholder='请输入qq邮箱'
             bordered={false}
             onChange={handleCode}
-            className="login_placeholder"
+            className='login_placeholder'
           />
-          <div className="login_divide"></div>
-          <div className="login_sendExamWord">
+          <div className='login_divide'></div>
+          <div className='login_sendExamWord'>
             <Input
-              type="password"
-              placeholder="请输入验证码"
+              type='password'
+              placeholder='请输入验证码'
               bordered={false}
               onChange={examWord}
-              className="login_placeholder"
+              className='login_placeholder'
             />
             <Button
               onClick={sendExamWord}
@@ -146,37 +145,34 @@ const App = () => {
               {count > 0 && count < 60 ? count : "发送验证码"}{" "}
             </Button>
           </div>
-          <div className="login_divide"></div>
+          <div className='login_divide'></div>
           <Input
-            type="password"
-            placeholder="请输入密码"
+            type='password'
+            placeholder='请输入密码'
             bordered={false}
             onChange={inputPassword}
-            className="login_placeholder"
+            className='login_placeholder'
           />
-          <div className="login_divide"></div>
+          <div className='login_divide'></div>
           <Input
-            type="password"
-            placeholder="请重复密码"
+            type='password'
+            placeholder='请重复密码'
             bordered={false}
             onChange={examPassword}
-            className="login_placeholder"
+            className='login_placeholder'
           />
-          <div className="login_divide"></div>
+          <div className='login_divide'></div>
         </div>
-        {/* <div className='login_forget_find'>
-                        <div className='login_forgrtPassword'>忘记密码</div>
-                        <div className='login_findPassword'>找回密码</div>
-                    </div> */}
         <div style={{ marginTop: 10, textAlign: "center" }}>
-          <Button type="primary" onClick={submit_thing}>
+          <Button type='primary' onClick={submit_thing}>
             点击注册
           </Button>
         </div>
-        {/* <div className='login_register' onClick={to_register}>没有账号，点击注册</div> */}
-        {/* </form> */}
+        <div style={{ fontSize: '12px', color: 'rgb(191,191,191)', cursor: 'pointer', marginTop: '10px' }} onClick={to_login}>点击返回登录界面</div>
       </div>
     </>
   );
-};
+}
+
+
 export default App;

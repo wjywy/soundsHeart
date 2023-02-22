@@ -1,10 +1,10 @@
 export interface loginForm {
-    username: string | number;
-    password: string | number;
-    examPassword: string | number;
+  username: string;
+  password: string;
+  examPassword: string;
 }
 
 export interface registerForm {
-    username: string | number;
-    password: string | number;
+  username: string;
+  password: string;
 }
